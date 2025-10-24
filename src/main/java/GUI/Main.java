@@ -27,7 +27,17 @@ public class Main {
         integrantes.add(xavi);
         integrantes.add(raul);
         
-        System.out.println();
+        System.out.println("Todos los integrantes comienzan una concentracion (Todos ejecutan el mismo metodo)");
+            for(SeleccionFutbol integrante : integrantes) {
+                System.out.println(integrante.getNombre() + " " + integrante.getApellidos() + "->");
+                integrante.Concentrarse();
+            }
+        
+        System.out.println("Todos los integrantes comienzan un viaje (Todos ejecutan el mismo metodo)");
+            for(SeleccionFutbol integrante : integrantes) {
+                System.out.println(integrante.getNombre() + " " + integrante.getApellidos() + "->");
+                integrante.Viajar();
+            }
     }
     
 }
