@@ -12,8 +12,8 @@ public class Futbolista extends SeleccionFutbol{
     private int dorsal;
     private String demarcacion;
 
-    public Futbolista( int id, int dorsal, String demarcacion, String nombre, String Apellidos, int Edad) {
-        super(id, nombre, Apellidos, Edad);
+    public Futbolista( int id, int dorsal, String demarcacion, String nombre, String apellidos, int edad) {
+        super(id, nombre, apellidos, edad);
         this.dorsal = dorsal;
         this.demarcacion = demarcacion;
     }
@@ -34,11 +34,14 @@ public class Futbolista extends SeleccionFutbol{
         this.demarcacion = demarcacion;
     }
 
-    public void juegaPartido(){
-        System.out.println(nombre + " Esta jugando el partido");
+    //implementacion polimorfica
+    @Override
+    public String trabajar(){
+        return getNombreCompleto()+ " Esta jugando el partido y entrenando";
     }
     
-    public void entrenar(){
-        System.out.println(nombre + " Esta entrenando");
+    @Override
+    public String getDetallesEspecificos(){
+        return "{Futbolista } Dorsal "+ dorsal+" Demarcacion "+ demarcacion;
     }
 }

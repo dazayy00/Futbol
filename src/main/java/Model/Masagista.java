@@ -12,8 +12,8 @@ public class Masagista extends SeleccionFutbol{
     private String titulacion;
     private int exp;
 
-    public Masagista(int id, String titulacion, int exp,  String nombre, String Apellidos, int Edad) {
-        super(id, nombre, Apellidos, Edad);
+    public Masagista(int id, String titulacion, int exp,  String nombre, String apellidos, int edad) {
+        super(id, nombre, apellidos, edad);
         this.titulacion = titulacion;
         this.exp = exp;
     }
@@ -34,7 +34,14 @@ public class Masagista extends SeleccionFutbol{
         this.exp = exp;
     }
     
-    public void darMasaje(){
-        System.out.println(nombre + " Esta dando un masaje");
+    //polimorfismo
+    @Override
+    public String trabajar(){
+        return getNombreCompleto() + " Esta dando un masaje";
+    }
+    
+    @Override
+    public String getDetallesEspecificos(){
+        return "{Masagista} Titulacion "+ titulacion+ " Años exp "+ exp;
     }
 }

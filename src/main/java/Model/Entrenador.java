@@ -11,8 +11,8 @@ package Model;
 public class Entrenador extends SeleccionFutbol{
     private String idFederacion;
 
-    public Entrenador(String idFederacion, int id, String nombre, String Apellidos, int Edad) {
-        super(id, nombre, Apellidos, Edad);
+    public Entrenador(String idFederacion, int id, String nombre, String apellidos, int edad) {
+        super(id, nombre, apellidos, edad);
         this.idFederacion = idFederacion;
     }
 
@@ -24,11 +24,14 @@ public class Entrenador extends SeleccionFutbol{
         this.idFederacion = idFederacion;
     }
     
-    public void dirigirPartido(){
-        System.out.println(nombre + " Esta dirigiendo el partido");
+    //polimorfismo
+    @Override
+    public String trabajar(){
+        return getNombreCompleto() +" Esta dirigiendo el partido y el entrenamiento";
     }
     
-    public void dirigirEntrenamiento(){
-        System.out.println(nombre + " Esta dirigiendo el entrenamiento");
+    @Override
+    public String getDetallesEspecificos(){
+        return "{Entrenador } ID FEDERACION"+ idFederacion;
     }
 }

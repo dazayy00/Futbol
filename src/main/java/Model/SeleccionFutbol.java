@@ -8,17 +8,17 @@ package Model;
  *
  * @author johan
  */
-public class SeleccionFutbol {
+public abstract class SeleccionFutbol {
     protected int id;
     protected String nombre;
-    protected String Apellidos;
-    protected int Edad;
+    protected String apellidos;
+    protected int edad;
 
-    public SeleccionFutbol(int id, String nombre, String Apellidos, int Edad) {
+    public SeleccionFutbol(int id, String nombre, String apellidos, int edad) {
         this.id = id;
         this.nombre = nombre;
-        this.Apellidos = Apellidos;
-        this.Edad = Edad;
+        this.apellidos = apellidos;
+        this.edad = edad;
     }
 
     public int getId() {
@@ -38,26 +38,35 @@ public class SeleccionFutbol {
     }
 
     public String getApellidos() {
-        return Apellidos;
+        return apellidos;
     }
 
     public void setApellidos(String Apellidos) {
-        this.Apellidos = Apellidos;
+        this.apellidos = Apellidos;
     }
 
     public int getEdad() {
-        return Edad;
+        return edad;
     }
 
-    public void setEdad(int Edad) {
-        this.Edad = Edad;
+    public void setEdad(int edad) {
+        this.edad = edad;
     }
     
-    public void Concentrarse(){
-        System.out.println(nombre + " Esta concentrandose");
+    public String Concentrarse(){
+        return getNombreCompleto()+" Esta concentrandose";
     }
     
-    public void Viajar(){
-        System.out.println(nombre + " Esta Viajando");
+    public String Viajar(){
+        return getNombreCompleto() + " Esta viajando";
     }
+    
+    public String getNombreCompleto(){
+        return nombre + " " + apellidos;
+    }
+    
+    //polimorfismo
+    public abstract String trabajar();
+    
+    public abstract String getDetallesEspecificos();
 }
