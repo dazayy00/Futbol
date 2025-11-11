@@ -24,6 +24,17 @@ public class Entrenador extends SeleccionFutbol{
         this.idFederacion = idFederacion;
     }
     
+    @Override
+    public void entrenar(){
+        System.out.println("Dirigiendo entrenamiento...");
+    }
+    
+    @Override
+    public void jugarPartido(){
+        System.out.println("Dirigiendo un partido...");
+    }
+    
+    /*
     //polimorfismo
     @Override
     public String trabajar(){
@@ -34,4 +45,5 @@ public class Entrenador extends SeleccionFutbol{
     public String getDetallesEspecificos(){
         return "{Entrenador } ID FEDERACION"+ idFederacion;
     }
+    */
 }

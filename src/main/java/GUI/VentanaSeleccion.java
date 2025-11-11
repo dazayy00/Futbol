@@ -5,6 +5,8 @@
 package GUI;
 
 import Logic.SeleccionLogica;
+import Model.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,6 +15,7 @@ import java.awt.event.ActionEvent;
  *
  * @author johan
  */
+/*
 public class VentanaSeleccion extends JFrame{
     
     private final SeleccionLogica logica;
@@ -229,5 +232,29 @@ public class VentanaSeleccion extends JFrame{
             VentanaSeleccion ventana = new VentanaSeleccion();
             ventana.setVisible(true);
         });
+    }
+}
+*/
+
+public class VentanaSeleccion{
+    public static void main(String[] args){
+        SeleccionLogica logic = new SeleccionLogica();
+        
+        Entrenador entrenador = new Entrenador("FED001", 1, "Javier", "Aguirre", 65);
+        Futbolista futbolista1 = new Futbolista(2, 10, "Delantero", "Raúl", "Jiménez", 32);
+        Futbolista futbolista2 = new Futbolista(3, 8, "Medio", "Edson", "Álvarez", 26);
+        Masagista masagista = new Masagista(4, "Fisioterapia Deportiva", 10, "Carlos", "López", 40);
+        
+        logic.agregarIntegrante(entrenador);
+        logic.agregarIntegrante(futbolista1);
+        logic.agregarIntegrante(futbolista2);
+        logic.agregarIntegrante(masagista);
+        
+        logic.mostrarIntegrantes();
+        
+        logic.concentrarEquipo();
+        logic.viajarEquipo();
+        logic.entrenarEquipo();
+        logic.jugarPartido();
     }
 }

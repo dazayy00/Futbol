@@ -6,12 +6,65 @@ package Logic;
 
 import Model.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author johan
  */
 public class SeleccionLogica {
+    
+    private List<SeleccionFutbol> integrantes;
+    
+    public SeleccionLogica(){
+        integrantes = new ArrayList<>();
+    }
+    
+    public void agregarIntegrante(SeleccionFutbol integrante){
+        integrantes.add(integrante);
+    }
+    
+    public void mostrarIntegrantes(){
+        System.out.println("===Integrantes de la seleccion===");
+        for(SeleccionFutbol integrante : integrantes){
+            System.out.println(integrante.getId()+" "+integrante.getNombre()+" "+integrante.getApellidos()
+            +"("+integrante.getClass().getSimpleName()+")");
+        }
+        System.out.println("================================");
+    }
+    
+    public void concentrarEquipo(){
+        System.out.println(">>>>>>El equipo se concentra: ");
+        for(SeleccionFutbol integrante : integrantes){
+            integrante.concentrarse();
+        }
+        System.out.println();
+    }
+    
+    public void viajarEquipo(){
+        System.out.println(">>>>>>>>>>>El equipo viaja");
+        for(SeleccionFutbol integrante : integrantes){
+            integrante.viajar();
+        }
+        System.out.println();
+    }
+    
+    public void entrenarEquipo(){
+        System.out.println(">>>>>>>>>>>>Entrenamiento de equipo");
+        for(SeleccionFutbol integrante : integrantes){
+            integrante.entrenar();
+        }
+        System.out.println();
+    }
+    
+    public void jugarPartido(){
+        System.out.println(">>>>>>>>>>Partido de futbol");
+        for(SeleccionFutbol integrante : integrantes){
+            integrante.jugarPartido();
+        }
+        System.out.println();
+    }
+    /*
     private ArrayList<SeleccionFutbol> integrantes;
 
     public SeleccionLogica(){
@@ -68,4 +121,5 @@ public class SeleccionLogica {
         }
         return sb.toString();
     }
+*/
 }

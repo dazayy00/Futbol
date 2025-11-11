@@ -33,7 +33,18 @@ public class Futbolista extends SeleccionFutbol{
     public void setDemarcacion(String demarcacion) {
         this.demarcacion = demarcacion;
     }
+    
+    @Override
+    public void entrenar(){
+        System.out.println("Realizando entrenamiento...");
+    }
+    
+    @Override
+    public void jugarPartido(){
+        System.out.println("Jugando partido...");
+    }
 
+    /*
     //implementacion polimorfica
     @Override
     public String trabajar(){
@@ -44,4 +55,6 @@ public class Futbolista extends SeleccionFutbol{
     public String getDetallesEspecificos(){
         return "{Futbolista } Dorsal "+ dorsal+" Demarcacion "+ demarcacion;
     }
+    */
+
 }

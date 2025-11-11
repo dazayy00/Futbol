@@ -34,6 +34,11 @@ public class Masagista extends SeleccionFutbol{
         this.exp = exp;
     }
     
+    @Override
+    public void entrenar(){
+        System.out.println("Da asistencia en el entrenamiento");
+    }
+    /*
     //polimorfismo
     @Override
     public String trabajar(){
@@ -44,4 +49,5 @@ public class Masagista extends SeleccionFutbol{
     public String getDetallesEspecificos(){
         return "{Masagista} Titulacion "+ titulacion+ " Años exp "+ exp;
     }
+    */
 }

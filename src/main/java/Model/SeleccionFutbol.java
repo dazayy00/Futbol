@@ -8,12 +8,14 @@ package Model;
  *
  * @author johan
  */
-public abstract class SeleccionFutbol {
+public abstract class SeleccionFutbol implements IntegranteSeleccionFutbol{
     protected int id;
     protected String nombre;
     protected String apellidos;
     protected int edad;
 
+    public SeleccionFutbol(){}
+    
     public SeleccionFutbol(int id, String nombre, String apellidos, int edad) {
         this.id = id;
         this.nombre = nombre;
@@ -53,20 +55,35 @@ public abstract class SeleccionFutbol {
         this.edad = edad;
     }
     
-    public String Concentrarse(){
-        return getNombreCompleto()+" Esta concentrandose";
-    }
-    
-    public String Viajar(){
-        return getNombreCompleto() + " Esta viajando";
-    }
-    
+    /*
     public String getNombreCompleto(){
         return nombre + " " + apellidos;
     }
+    */
+    @Override
+    public void concentrarse(){
+        System.out.println("Concentrarse...");
+    }
     
+    @Override
+    public void viajar(){
+        System.out.println("Viajar...");
+    }
+
+    @Override
+    public void entrenar(){
+        System.out.println("Entrenar...");
+    }
+    
+    @Override
+    public void jugarPartido(){
+        System.out.println("Asiste al partido de futbol...");
+    }
+
+    /*
     //polimorfismo
     public abstract String trabajar();
     
     public abstract String getDetallesEspecificos();
+    */
 }
