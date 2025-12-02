@@ -1,23 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package GUI;
 
 import Logic.SeleccionLogica;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
-/**
- *
- * @author johan
- */
 public class VentanaSeleccion extends JFrame{
     
     private final SeleccionLogica logica;
-    
-    // Componentes de la GUI
+
     private JTextArea areaLog;
     private JComboBox<String> comboTipo;
     private JTextField txtId, txtNombre, txtApellidos, txtEdad;
@@ -39,7 +29,6 @@ public class VentanaSeleccion extends JFrame{
     private void initComponents() {
         setLayout(new BorderLayout(10, 10));
 
-        // --- Panel de Acciones (Sur) ---
         JPanel panelAcciones = new JPanel(new FlowLayout());
         JButton btnConcentrar = new JButton("Concentrarse");
         JButton btnViajar = new JButton("Viajar");
@@ -50,18 +39,15 @@ public class VentanaSeleccion extends JFrame{
         panelAcciones.add(btnTrabajar);
         add(panelAcciones, BorderLayout.SOUTH);
 
-        // --- Log de Texto (Centro) ---
         areaLog = new JTextArea();
         areaLog.setEditable(false);
         areaLog.setFont(new Font("Monospaced", Font.PLAIN, 12));
         JScrollPane scrollLog = new JScrollPane(areaLog);
         add(scrollLog, BorderLayout.CENTER);
 
-        // --- Panel de Formulario (Norte) ---
         JPanel panelForm = new JPanel(new BorderLayout(5, 5));
         panelForm.setBorder(BorderFactory.createTitledBorder("Agregar Integrante"));
         
-        // Formulario base
         JPanel formBase = new JPanel(new GridLayout(0, 2, 5, 5));
         formBase.add(new JLabel("Tipo:"));
         comboTipo = new JComboBox<>(new String[]{"Futbolista", "Entrenador", "Masajista"});
@@ -83,7 +69,6 @@ public class VentanaSeleccion extends JFrame{
         txtEdad = new JTextField();
         formBase.add(txtEdad);
 
-        // Formulario específico (dinámico)
         lblEsp1 = new JLabel("Dorsal:");
         txtEsp1 = new JTextField();
         lblEsp2 = new JLabel("Demarcación:");
@@ -101,18 +86,14 @@ public class VentanaSeleccion extends JFrame{
         
         add(panelForm, BorderLayout.NORTH);
 
-        // --- Event Listeners (Controladores) ---
-        
-        // Cambia los labels del formulario según el tipo
+
         comboTipo.addActionListener(e -> actualizarFormularioEspecifico());
         
-        // Botones de acciones
         btnConcentrar.addActionListener(e -> accionConcentrar());
         btnViajar.addActionListener(e -> accionViajar());
         btnTrabajar.addActionListener(e -> accionTrabajar());
         btnAgregar.addActionListener(e -> accionAgregar());
         
-        // Inicializar el formulario
         actualizarFormularioEspecifico();
     }
     
@@ -140,7 +121,6 @@ public class VentanaSeleccion extends JFrame{
     
     private void accionAgregar() {
         try {
-            // Datos comunes
             int id = Integer.parseInt(txtId.getText());
             String nombre = txtNombre.getText();
             String apellidos = txtApellidos.getText();
@@ -152,13 +132,11 @@ public class VentanaSeleccion extends JFrame{
             
             String tipo = (String) comboTipo.getSelectedItem();
             
-            // Datos específicos
             String val1 = txtEsp1.getText();
             String val2 = txtEsp2.getText();
 
             switch(tipo){
                 case "Futbolista":
-                    // Tu definición es: (id, dorsal, demarcacion, nombre, apellidos, edad)
                     int dorsal = Integer.parseInt(val1);
                     String demarcacion = val2;
         
@@ -166,14 +144,12 @@ public class VentanaSeleccion extends JFrame{
                 break;
                 
                 case "Entrenador":
-                    // Tu definición es: (idFederacion, id, nombre, apellidos, edad)
                     String idFederacion = val1;
         
                     logica.agregarEntrenador(idFederacion, id, nombre, apellidos, edad);
                     break;
         
                 case "Masajista":
-                    // Tu definición es: (id, titulacion, exp, nombre, apellidos, edad)
                     String titulacion = val1;
                     int exp = Integer.parseInt(val2);
         
@@ -207,7 +183,6 @@ public class VentanaSeleccion extends JFrame{
         actualizarLog(resultado);
     }
     
-    // Helper para limpiar el formulario
     private void limpiarFormulario() {
         txtId.setText("");
         txtNombre.setText("");
@@ -217,14 +192,11 @@ public class VentanaSeleccion extends JFrame{
         txtEsp2.setText("");
     }
     
-    // Helper para actualizar el log
     private void actualizarLog(String texto) {
         areaLog.setText(texto);
     }
 
-    // --- Punto de Entrada (Main) ---
     public static void main(String[] args) {
-        // Asegura que la GUI se ejecute en el hilo de eventos de Swing
         SwingUtilities.invokeLater(() -> {
             VentanaSeleccion ventana = new VentanaSeleccion();
             ventana.setVisible(true);

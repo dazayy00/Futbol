@@ -41,8 +41,8 @@ public abstract class SeleccionFutbol {
         return apellidos;
     }
 
-    public void setApellidos(String Apellidos) {
-        this.apellidos = Apellidos;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
     public int getEdad() {
@@ -53,11 +53,11 @@ public abstract class SeleccionFutbol {
         this.edad = edad;
     }
     
-    public String Concentrarse(){
+    public String concentrarse(){
         return getNombreCompleto()+" Esta concentrandose";
     }
     
-    public String Viajar(){
+    public String viajar(){
         return getNombreCompleto() + " Esta viajando";
     }
     

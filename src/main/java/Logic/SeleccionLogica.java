@@ -48,7 +48,7 @@ public class SeleccionLogica {
     public String ejecutarConcentracion(){
         StringBuilder sb = new StringBuilder("Iniciando concentracion"); 
         for(SeleccionFutbol integrante : integrantes){
-            sb.append(integrante.Concentrarse()).append("\n");
+            sb.append(integrante.concentrarse()).append("\n");
         }
         return sb.toString();
     }
@@ -56,7 +56,7 @@ public class SeleccionLogica {
     public String ejecutarViaje(){
         StringBuilder sb = new StringBuilder("Iniciando Viaje");
         for(SeleccionFutbol integrante : integrantes){
-            sb.append(integrante.Viajar()).append("\n");
+            sb.append(integrante.viajar()).append("\n");
         }
         return sb.toString();
     }
