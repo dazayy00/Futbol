@@ -1,6 +1,9 @@
+Logic\FutbolistaService.class
+Model\SeleccionFutbol.class
+Model\Futbolista.class
+Logic\SeleccionService.class
 Model\Entrenador.class
 GUI\VentanaSeleccion.class
-Model\SeleccionFutbol.class
-Logic\SeleccionLogica.class
-Model\Futbolista.class
-Model\Masagista.class
+Model\Masajista.class
+Logic\MasajistaService.class
+Logic\EntrenadorService.class

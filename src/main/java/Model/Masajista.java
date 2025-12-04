@@ -8,11 +8,11 @@ package Model;
  *
  * @author johan
  */
-public class Masagista extends SeleccionFutbol{
+public class Masajista extends SeleccionFutbol{
     private String titulacion;
     private int exp;
 
-    public Masagista(int id, String titulacion, int exp,  String nombre, String apellidos, int edad) {
+    public Masajista(int id, String titulacion, int exp,  String nombre, String apellidos, int edad) {
         super(id, nombre, apellidos, edad);
         this.titulacion = titulacion;
         this.exp = exp;

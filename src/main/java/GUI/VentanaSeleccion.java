@@ -1,12 +1,19 @@
 package GUI;
 
-import Logic.SeleccionLogica;
+import Logic.EntrenadorService;
+import Logic.FutbolistaService;
+import Logic.MasajistaService;
+import Logic.SeleccionService;
+import Model.SeleccionFutbol;
 import javax.swing.*;
 import java.awt.*;
 
 public class VentanaSeleccion extends JFrame{
     
-    private final SeleccionLogica logica;
+    private final SeleccionService seleccionService;
+    private final FutbolistaService futbolistaService;
+    private final EntrenadorService entrenadorService;
+    private final MasajistaService masajistaService;
 
     private JTextArea areaLog;
     private JComboBox<String> comboTipo;
@@ -15,15 +22,19 @@ public class VentanaSeleccion extends JFrame{
     private JTextField txtEsp1, txtEsp2;
     
     public VentanaSeleccion() {
-        this.logica = new SeleccionLogica();
+        this.seleccionService = new SeleccionService();
+        this.futbolistaService = new FutbolistaService();
+        this.entrenadorService = new EntrenadorService();
+        this.masajistaService = new MasajistaService();
 
-        setTitle("Gestión Selección de Fútbol");
-        setSize(700, 600);
+        setTitle("Gestión Selección de Fútbol (Servicios Separados)");
+        setSize(700, 650);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         
         initComponents();
-        actualizarLog(logica.obtenerListaIntegrantes());
+        
+        actualizarLog(seleccionService.obtenerNominaCompleta()); 
     }
 
     private void initComponents() {
@@ -33,10 +44,12 @@ public class VentanaSeleccion extends JFrame{
         JButton btnConcentrar = new JButton("Concentrarse");
         JButton btnViajar = new JButton("Viajar");
         JButton btnTrabajar = new JButton("Trabajar (Polimorfismo)");
+        JButton btnVerNomina = new JButton("Ver Nómina");
         
         panelAcciones.add(btnConcentrar);
         panelAcciones.add(btnViajar);
         panelAcciones.add(btnTrabajar);
+        panelAcciones.add(btnVerNomina);
         add(panelAcciones, BorderLayout.SOUTH);
 
         areaLog = new JTextArea();
@@ -81,7 +94,7 @@ public class VentanaSeleccion extends JFrame{
         
         panelForm.add(formBase, BorderLayout.CENTER);
 
-        JButton btnAgregar = new JButton("Agregar");
+        JButton btnAgregar = new JButton("Agregar Integrante");
         panelForm.add(btnAgregar, BorderLayout.SOUTH);
         
         add(panelForm, BorderLayout.NORTH);
@@ -92,6 +105,7 @@ public class VentanaSeleccion extends JFrame{
         btnConcentrar.addActionListener(e -> accionConcentrar());
         btnViajar.addActionListener(e -> accionViajar());
         btnTrabajar.addActionListener(e -> accionTrabajar());
+        btnVerNomina.addActionListener(e -> accionVerNomina());
         btnAgregar.addActionListener(e -> accionAgregar());
         
         actualizarFormularioEspecifico();
@@ -103,20 +117,25 @@ public class VentanaSeleccion extends JFrame{
         
         switch (tipo) {
             case "Futbolista":
-                lblEsp1.setText("Dorsal:");
-                lblEsp2.setText("Demarcación:");
+                lblEsp1.setText("Dorsal (num):");
+                lblEsp2.setText("Demarcación (str):");
+                txtEsp2.setVisible(true);
+                lblEsp2.setVisible(true);
                 break;
             case "Entrenador":
-                lblEsp1.setText("ID Federación:");
+                lblEsp1.setText("ID Federación (str):");
                 lblEsp2.setText("(N/A)");
+                txtEsp2.setVisible(false);
+                lblEsp2.setVisible(false);
                 break;
             case "Masajista":
-                lblEsp1.setText("Titulación:");
-                lblEsp2.setText("Años Exp:");
+                lblEsp1.setText("Titulación (str):");
+                lblEsp2.setText("Años Exp (num):");
+                txtEsp2.setVisible(true);
+                lblEsp2.setVisible(true);
                 break;
         }
-        txtEsp1.setText("");
-        txtEsp2.setText("");
+        limpiarCamposEspeciales();
     }
     
     private void accionAgregar() {
@@ -127,76 +146,89 @@ public class VentanaSeleccion extends JFrame{
             int edad = Integer.parseInt(txtEdad.getText());
             
             if (nombre.isEmpty() || apellidos.isEmpty()) {
-                throw new Exception("Nombre y Apellidos no pueden estar vacíos.");
+                throw new IllegalArgumentException("Nombre y Apellidos no pueden estar vacíos.");
             }
             
             String tipo = (String) comboTipo.getSelectedItem();
-            
             String val1 = txtEsp1.getText();
             String val2 = txtEsp2.getText();
 
+            SeleccionFutbol nuevoIntegrante = null;
+            
             switch(tipo){
                 case "Futbolista":
                     int dorsal = Integer.parseInt(val1);
                     String demarcacion = val2;
-        
-                logica.agregarFutbolista(id, dorsal, demarcacion, nombre, apellidos, edad);
-                break;
+                    nuevoIntegrante = futbolistaService.registrarFutbolista(id, dorsal, demarcacion, nombre, apellidos, edad);
+                    break;
                 
                 case "Entrenador":
                     String idFederacion = val1;
-        
-                    logica.agregarEntrenador(idFederacion, id, nombre, apellidos, edad);
-                    break;
-        
-                case "Masajista":
-                    String titulacion = val1;
-                    int exp = Integer.parseInt(val2);
-        
-                    logica.agregarMasagista(id, titulacion, exp, nombre, apellidos, edad);
+                    nuevoIntegrante = entrenadorService.registrarEntrenador(idFederacion, id, nombre, apellidos, edad);
                     break;
                 
+                case "Masajista":
+                    String titulacion = val1;
+                    int exp = Integer.parseInt(val2); 
+                    nuevoIntegrante = masajistaService.registrarMasajista(id, titulacion, exp, nombre, apellidos, edad);
+                    break;
             }
             
-            actualizarLog("¡NUEVO INTEGRANTE AGREGADO!\n" + logica.obtenerListaIntegrantes());
-            limpiarFormulario();
+            if (nuevoIntegrante != null) {
+                seleccionService.agregarIntegrante(nuevoIntegrante);
+                actualizarLog("¡NUEVO INTEGRANTE AGREGADO!: " + nuevoIntegrante.getNombreCompleto() + "\n" + seleccionService.obtenerNominaCompleta());
+                limpiarFormulario();
+            }
 
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Error en el formato de número (ID, Edad, Dorsal, Exp).", "Error de Formato", JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, "Error de Validación: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error al agregar: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error desconocido: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void accionConcentrar() {
-        String resultado = logica.ejecutarConcentracion();
+        String resultado = seleccionService.planificarConcentracion();
         actualizarLog(resultado);
     }
     
     private void accionViajar() {
-        String resultado = logica.ejecutarViaje();
+        String resultado = seleccionService.gestionarViaje();
         actualizarLog(resultado);
     }
     
     private void accionTrabajar() {
-        String resultado = logica.ejecutarTrabajoPolimorfico();
+        String resultado = seleccionService.iniciarEntrenamiento();
         actualizarLog(resultado);
     }
-    
+
+    private void accionVerNomina() {
+        actualizarLog(seleccionService.obtenerNominaCompleta());
+    }
+ 
     private void limpiarFormulario() {
         txtId.setText("");
         txtNombre.setText("");
         txtApellidos.setText("");
         txtEdad.setText("");
+        limpiarCamposEspeciales();
+    }
+    
+    private void limpiarCamposEspeciales() {
         txtEsp1.setText("");
         txtEsp2.setText("");
     }
     
     private void actualizarLog(String texto) {
         areaLog.setText(texto);
+        areaLog.setCaretPosition(0); 
     }
 
     public static void main(String[] args) {
+        try { UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); } catch (Exception ignored) {}
+
         SwingUtilities.invokeLater(() -> {
             VentanaSeleccion ventana = new VentanaSeleccion();
             ventana.setVisible(true);
